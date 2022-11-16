@@ -215,10 +215,9 @@ $
 
 ## AUTHORS
 
-### 🙋‍♀️ Gifty Ikechukwu
-- [GitHub](https://github.com/giftyphilips)
-- [LinkedIn](https://www.linkedin.com/in/giftyikechukwu/)
+### 🙋‍♂️ Chukwudi Precious Ebuka
+- [GitHub](https://github.com/PreciousOfLive)
+- [LinkedIn](https://www.linkedin.com/in/preciouschukwudi)
+- [Twitter] (www.twitter.com/PreciousOfLive)
 
-### 🙋‍♂️ Isaac Toluwani
-- [GitHub](https://github.com/IsaacToluwani)
-- [LinkedIn](https://www.linkedin.com/in/isaac-toluwani/)
+### 🙋‍♂️ Michael Adebowale
