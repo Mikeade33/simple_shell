@@ -1,102 +1,224 @@
-# simple_shell
-Simple shell project Project done in teams of 2 people; Michael Adebowale and Chukwudi Chukwudi for ALX
+# ALX Simple Shell Team Project
+<p align="center">
+<img src="https://s3.amazonaws.com/intranet-projects-files/holbertonschool-low_level_programming/235/shell.jpeg" width="700" height="400" />
+</p>
 
-**SIMPLE UNIX SHELL 🐚**
+> This is an ALX collaboration project on Shell.
+> We were tasked to create a simple shell that mimics the Bash shell.
+> 
+> Our shell shall be called `hsh`.
+## Introduction
+This repository is a ALX Holberton School Project. The school project consisted in writing a shell like `sh` (Bourne Shell) by Stephen Bourne , in `C`, using a limited number of standard library functions, so instead we used our own function that we rewrited over the past three month [Here.](https://github.com/TosinISOGUN/alx-low_level_programming)
 
-**Description 📃**
+The goal in this project is to make us understand how a shell works.
+- To single out some core topics which includes;
+  - What is the environment?
+  - The difference between functions and system calls.
+  - How to create processes using `execve...`
 
-This is a simple implementation of a UNIX command line interpreter. The shell can interpret and execute command line arguments read from the standard input. the shell read lines from a file or terminal line which is then interpreted and executed if the command is valid
+## General Requirements
+<img src="https://alx-apply.hbtn.io/brand_alx/share_image_2019.jpg" width="300" height="100" />
 
-**Requirements**
+- `README file`, at the root of the folder of the project is mandatory.
+- Allowed editors: `vi`, `vim`, `emacs`
+- Compiler;
+  - Ubuntu 20.04 LTS using gcc.
+  - Using the options `-Wall -Werror -Wextra -pedantic -std=gnu89`
+- Coding style;
+  - Betty Style.
+- Shell should not have any memory leaks.
+- No more than 5 functions per file.
+- All header files should be include guarded.
 
-All the files are to be compiled on an Ubuntu 14.04 LTS machine with: gcc -Wall -Werror -Wextra -pedantic *.c All files ends end with a new line, with no memory leaks All code will use the Betty style. It will be checked using betty-style.pl and betty-doc.pl All code will be tested using the test files in the test folder. The simple shell supports most shell commands, such as cat, pwd, ls -la and more. Return Value : The shell returns a value of 0 if the command is valid and the command is executed successfully.
+## How hsh works
+- Prints a prompt and waits for a command from the user.
+- Creates a child process in which the command is checked.
+- Checks for built-ins, aliases in the PATH, and local executable programs.
+- The child process is replaced by the command, which accepts arguments.
+- When the command is done, the program returns to the parent process and prints the prompt.
+- The program is ready to receive a new command.
+- To exit: press `Ctrl-D` or enter "`exit`" (with or without a status).
+- Works also in non interactive mode.
 
-**Output 📁**
+## Usage
+In order to run this program,
 
-The program must have the exact same output as sh (/bin/sh) as well as the exact same error output. The only difference is when you print an error, the name of the program must be equivalent to the argv[0] Usage
+Clone This Repo;
 
-**List of fucntions and system calls used**
+`git clone https://github.com/TosinISOGUN/simple_shell.git`
 
-access (man 2 access)
-chdir (man 2 chdir)
-close (man 2 close)
-closedir (man 3 closedir)
-execve (man 2 execve)
-exit (man 3 exit)
-_exit (man 2 _exit)
-fflush (man 3 fflush)
-fork (man 2 fork)
-free (man 3 free)
-getcwd (man 3 getcwd)
-getline (man 3 getline)
-isatty (man 3 isatty)
-kill (man 2 kill)
-malloc (man 3 malloc)
-open (man 2 open)
-opendir (man 3 opendir)
-perror (man 3 perror)
-read (man 2 read)
-readdir (man 3 readdir)
-signal (man 2 signal)
-stat (__xstat) (man 2 stat)
-lstat (__lxstat) (man 2 lstat)
-fstat (__fxstat) (man 2 fstat)
-strtok (man 3 strtok)
-wait (man 2 wait)
-waitpid (man 2 waitpid)
-wait3 (man 2 wait3)
-wait4 (man 2 wait4)
-write (man 2 write)
-Compilation
+Compile it with;
 
-The shell will be compiled this way: gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+`gcc 4.8.4 -Wall -Werror -Wextra -pedantic *.c -o hsh.`
 
-**Testing**
+You can then run it by invoking `./hsh` in that same directory.
 
-The shell works like this in interactive mode:
+How to use it
+In order to use this shell, in a terminal, first run the program:
+`prompt$ ./hsh`
+It wil then display a simple prompt and wait for commands.
+`$`
+A command will be of the type `$` command
 
-$ ./hsh ($) /bin/ls hsh main.c shell.c ($) ($) exit $
+To invoke **hsh**, compile all .c files in the repository and run the resulting executable.
 
-But also in non-interactive mode:
+hsh can be invoked both interactively and non-interactively. If hsh is invoked with standard input not connected to a terminal, it reads and executes received commands in order.
 
-$ echo "/bin/ls" | ./hsh hsh main.c shell.c test_ls_2 $ $ cat test_ls_2 /bin/ls /bin/ls $ $ cat test_ls_2 | ./hsh hsh main.c shell.c test_ls_2 hsh main.c shell.c test_ls_2 $
+Example:
+```
+$ echo "echo 'hello'" | ./hsh
+'hello'
+$
+```
+If hsh is invoked with standard input connected to a terminal (determined by isatty(3)), an interactive shell is opened. When executing interactively, hsh displays the prompt $ when it is ready to read a command.
 
-**Mandatory Tasks**
+Example:
+```
+$./hsh
+$
+```
 
-0. Betty would be proud
+Alternatively, if command line arguments are supplied upon invocation, hsh treats the first argument as a file from which to read commands. The supplied file should contain one command per line. hsh runs each of the commands contained in the file in order before exiting.
 
-Write a beautiful code that passes the Betty checks
+Example:
+```
+$ cat test
+echo 'hello'
+$ ./hsh test
+'hello'
+$
+```
 
-1. Simple shell 0.1
+## Environment
+Upon invocation, `hsh` receives and copies the environment of the parent process in which it was executed. This environment is an array of name-value strings describing variables in the format `NAME=VALUE`. A few key environmental variables are:
 
-Write a UNIX command line interpreter.
+### HOME
+The home directory of the current user and the default directory argument for the cd builtin command.
+```
+$ echo "echo $HOME" | ./hsh
+/home/projects
+```
 
-Usage: simple_shell Your Shell should:
+### PWD
+The current working directory as set by the cd command.
+```
+$ echo "echo $PWD" | ./hsh
+/home/projects/alx/simple_shell
+```
 
-Display a prompt and wait for the user to type a command. A command line always ends with a new line. The prompt is displayed again each time a command has been executed. The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features. The command lines are made only of one word. No arguments will be passed to programs. If an executable cannot be found, print an error message and display the prompt again. Handle errors. You have to handle the “end of file” condition (Ctrl+D) You don’t have to:
+### OLDPWD
+The previous working directory as set by the cd command.
+```
+$ echo "echo $OLDPWD" | ./hsh
+/home/projects/alx/printf
+```
 
-use the PATH implement built-ins handle special characters : ", ', `, , *, &, # be able to move the cursor handle commands with arguments execve will be the core part of your Shell, don’t forget to pass the environ to it…
+### PATH
+A colon-separated list of directories in which the shell looks for commands. A null directory name in the path (represented by any of two adjacent colons, an initial colon, or a trailing colon) indicates the current directory.
+```
+$ echo "echo $PATH" | ./hsh
+/home/projects/.cargo/bin:/home/projects/.local/bin:/home/projects/.rbenv/plugins/ruby-build/bin:/home/projects/.rbenv/shims:/home/projects/.rbenv/bin:/home/projects/.nvm/versions/node/v10.15.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/projects/.cargo/bin:/home/projects/workflow:/home/projects/.local/bin
+```
 
-3. Simple shell 0.3
+## hsh Builtin Commands
+### cd
+- Usage: `cd [DIRECTORY]`
+- Changes the current directory of the process to `DIRECTORY`.
+- If no argument is given, the command is interpreted as `cd $HOME`.
+- If the argument `-` is given, the command is interpreted as `cd $OLDPWD` and the pathname of the new working directory is printed to standad output.
+- If the argument, `--` is given, the command is interpreted as `cd $OLDPWD` but the pathname of the new working directory is not printed.
+- The environment variables `PWD` and `OLDPWD` are updated after a change of directory.
 
-Simple shell 0.2 +
+Example:
+```
+$ ./hsh
+$ pwd
+/home/projects/alx/simple_shell
+$ cd ../
+$ pwd
+/home/projects/alx
+$ cd -
+$ pwd
+/home/projects/alx/simple_shell
+```
 
-Handle the PATH fork must not be called if the command doesn’t exist
+### alias
+- Usage: `alias [NAME[='VALUE'] ...]`
+- Handles aliases.
+- `alias`: Prints a list of all aliases, one per line, in the form `NAME='VALUE'`.
+- `alias NAME [NAME2 ...]`: Prints the aliases NAME, NAME2, etc. one per line, in the form `NAME='VALUE'`.
+- `alias NAME='VALUE' [...]`: Defines an alias for each NAME whose `VALUE` is given. If name is already an alias, its value is replaced with `VALUE`.
 
-4. Simple shell 0.4
+Example:
+```
+$ ./hsh
+$ alias show=ls
+$ show
+AUTHORS            builtins_help_2.c  errors.c         linkedlist.c        shell.h       test
+README.md          env_builtins.c     getline.c        locate.c            hsh
+alias_builtins.c   environ.c          helper.c         main.c              split.c
+builtin.c          err_msgs1.c        helpers_2.c      man_1_simple_shell  str_funcs1.c
+builtins_help_1.c  err_msgs2.c        input_helpers.c  proc_file_comm.c    str_funcs2.c
+```
 
-Simple shell 0.3 +
+### exit
+- Usage: exit [STATUS]
+- Exits the shell.
+- The STATUS argument is the integer used to exit the shell.
+- If no argument is given, the command is interpreted as exit 0.
 
-Implement the exit built-in, that exits the shell Usage: exit You don’t have to handle any argument to the built-in exit
+Example:
+```
+$ ./hsh
+$ exit
+```
 
-5. Simple shell 1.0
+### env
+- Usage: env
+- Prints the current environment.
 
-Simple shell 0.4 +
+Example:
+```
+$ ./hsh
+$ env
+NVM_DIR=/home/projects/.nvm
+...
+```
 
-Implement the env built-in, that prints the current environment
+### setenv
+- Usage: setenv [VARIABLE] [VALUE]
+- Initializes a new environment variable, or modifies an existing one.
+- Upon failure, prints a message to stderr.
 
-**Contributors 👫**
+Example:
+```
+$ ./hsh
+$ setenv NAME Poppy
+$ echo $NAME
+Poppy
+```
 
-Michael Adebowale
+### unsetenv
+- Usage: `unsetenv [VARIABLE]`
+- Removes an environmental variable.
+- Upon failure, prints a message to `stderr`.
 
-Chukwudi Chukwudi
+Example:
+```
+$ ./hsh
+$ setenv NAME Poppy
+$ unsetenv NAME
+$ echo $NAME
+$
+```
+**Thank you for going through our shell documentation.**
+
+## AUTHORS
+
+### 🙋‍♀️ Gifty Ikechukwu
+- [GitHub](https://github.com/giftyphilips)
+- [LinkedIn](https://www.linkedin.com/in/giftyikechukwu/)
+
+### 🙋‍♂️ Isaac Toluwani
+- [GitHub](https://github.com/IsaacToluwani)
+- [LinkedIn](https://www.linkedin.com/in/isaac-toluwani/)
